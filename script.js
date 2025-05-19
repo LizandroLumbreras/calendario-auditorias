@@ -1,9 +1,24 @@
 
 const calendar = document.getElementById('calendar');
 const notesField = document.getElementById('notes');
-let selectedDay = null;
+const monthTitle = document.getElementById('month-title');
 
-function generateCalendar() {
+let selectedDay = null;
+let currentDate = new Date();
+
+const monthNames = [
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
+
+function updateCalendar() {
+  calendar.innerHTML = "";
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  monthTitle.textContent = `Calendario de Pendientes - ${monthNames[month]} ${year}`;
+
   for (let i = 1; i <= daysInMonth; i++) {
     const day = document.createElement('div');
     day.className = 'day';
@@ -13,8 +28,17 @@ function generateCalendar() {
   }
 }
 
+function changeMonth(delta) {
+  currentDate.setMonth(currentDate.getMonth() + delta);
+  updateCalendar();
+  notesField.value = "";
+  selectedDay = null;
+}
+
 function getDocumentId(day) {
-  return `nota-${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const dayStr = String(day).padStart(2, '0');
+  return `nota-${currentDate.getFullYear()}-${month}-${dayStr}`;
 }
 
 function selectDay(dayNumber, element) {
@@ -47,8 +71,8 @@ function saveNote() {
 
   db.collection("pendientes").doc(docId).set({
     dia: dayNumber,
-    mes: currentMonth,
-    anio: currentYear,
+    mes: currentDate.getMonth() + 1,
+    anio: currentDate.getFullYear(),
     nota: noteText,
     timestamp: firebase.firestore.FieldValue.serverTimestamp()
   }).then(() => {
@@ -58,4 +82,4 @@ function saveNote() {
   });
 }
 
-generateCalendar();
+document.addEventListener("DOMContentLoaded", updateCalendar);
