@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Calendario de Pendientes</h1>
+    <h1>Calendario de Pendientes - May 2025</h1>
     <div id="calendar"></div>
     <div class="form-container">
       <h2>Pendientes del Día</h2>
@@ -16,6 +16,26 @@
       <button onclick="saveNote()">Guardar</button>
     </div>
   </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCa0ZTJutDGMmYVwNE5B58k9menrkbRv8",
+      authDomain: "calendario-7f6ed.firebaseapp.com",
+      projectId: "calendario-7f6ed",
+      storageBucket: "calendario-7f6ed.firebasestorage.app",
+      messagingSenderId: "215320786176",
+      appId: "1:215320786176:web:8be9c19217192ed52cafe5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const currentMonth = 5;
+    const currentYear = 2025;
+    const daysInMonth = 31;
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
