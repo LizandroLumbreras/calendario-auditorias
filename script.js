@@ -82,4 +82,5 @@ function saveNote() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", updateCalendar);
+// Ejecutar al cargar
+updateCalendar();
